@@ -34,13 +34,17 @@ Page.prototype.getCurrentTitle = function () {
  * @param {number} timeout
  * @returns {webdriver.promise.Promise<T>}
  */
-Page.prototype.waitForElement = function(locator, timeout) {
+Page.prototype.waitForElement = function (locator, timeout) {
   var waitTimeout = timeout || 10000;
   var driver = this.driver;
   return driver.wait(function() {
     driver.isElementPresent(locator);
   }, waitTimeout);
 };
+
+Page.prototype.waitForPageToLoad = function () {
+  return this.driver.exe
+}
 
 /**
  * Find element by its locator
@@ -78,14 +82,7 @@ Page.prototype.clickElement = function(locator) {
  * a promise that will be resolved when the command has completed.
  */
 Page.prototype.sendKeysToElement = function(locator, input) {
-  var element = this.element(locator);
-  this.waitForElement(locator).then(function () {
-    if (element.isDisplayed() && element.isEnabled()) {
-      element.clear();
-    }
-    throw new Error('Not displayed/enabled element, found by: ', locator)
-  });
-  return element.sendKeys(input);
+  return this.element(locator).sendKeys(input);
 };
 
 module.exports = Page;

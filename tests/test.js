@@ -1,7 +1,7 @@
 "use strict";
 
 var test = require('selenium-webdriver/testing');
-var HomePage = require('../pageObjects/basePage');
+var LoginPage = require('../pageObjects/loginPage');
 var assert = require('chai').assert;
 
 test.describe('BaseCRM Test', function () {
@@ -10,15 +10,17 @@ test.describe('BaseCRM Test', function () {
 
   test.before(function () {
     driver = require('./driver').getDriver();
-    page = new HomePage(driver, 'http://orteil.dashnet.org/cookieclicker/');
+    page = new LoginPage(driver, 'https://core.futuresimple.com/sales/users/login');
   });
 
   test.after(function () {
     driver.quit();
   });
 
-  test.it('get title', function () {
+  test.it('Login and inputs username and password', function () {
     page.open();
-    page.multipleClickElement({id : 'bigCookie'});
+    page.inputUserName('me@dbobylev.info')
+    page.inputPassword('236754aA!')
+    page.clickSubmit()
   });
 });
