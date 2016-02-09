@@ -1,0 +1,21 @@
+{
+  "name": "base-autotest",
+  "version": "0.0.1",
+  "description": "Simple test using mocha and selenium-webdriverjs to test BaseCRM",
+  "main": "test.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git"
+  },
+  "author": "Dmitry Bobylev",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "fs": "0.0.2",
+    "mocha": "^2.4.5",
+    "selenium-webdriver": "2.45.0"
+  }
+}
