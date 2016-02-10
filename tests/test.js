@@ -27,7 +27,7 @@ test.describe('BaseCRM Test', function () {
   test.it('Login and inputs username and password', function () {
     loginP = new LoginPage(driver);
     loginP.open();
-    loginP.login('dimster-od@yandex.ru', '236754');
+    loginP.login('secretlogin', 'secretpassword');
   });
 
   test.it('Click leads on app page', function () {
