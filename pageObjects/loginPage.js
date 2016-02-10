@@ -1,7 +1,7 @@
 var Page = require('./basePage');
 
-function LoginPage (webdriver, url) {
-  Page.call(this, webdriver, url);
+function LoginPage (webdriver) {
+  Page.call(this, webdriver, 'https://core.futuresimple.com/sales/users/login');
 }
 
 LoginPage.prototype = Object.create(Page.prototype);
@@ -16,7 +16,14 @@ LoginPage.prototype.inputPassword = function (password) {
 };
 
 LoginPage.prototype.clickSubmit = function () {
-  return this.clickElement({ xpath : '//div[@class="controls"]/button' })
-}
+  return this.clickElement({ xpath : '//div[@class="controls"]/button' });
+};
+
+LoginPage.prototype.login = function (username, password) {
+  this.inputUserName(username);
+  this.inputPassword(password);
+  this.clickSubmit();
+  return this;
+};
 
 module.exports = LoginPage;

@@ -1,10 +1,15 @@
-
 var webdriver = require('selenium-webdriver');
+var driver;
 
-var getDriver = function () {
-  return new webdriver.Builder()
-    .forBrowser('chrome')
-    .build();
+var getDriver = function() {
+  if(driver) {
+    return driver;
+  } else {
+    driver = new webdriver.Builder().
+    withCapabilities(webdriver.Capabilities.chrome()).
+    build();
+    return driver;
+  }
 };
 
 module.exports.getDriver = getDriver;

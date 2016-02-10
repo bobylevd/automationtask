@@ -23,28 +23,19 @@ Page.prototype.open = function() {
   return this;
 };
 
-
-Page.prototype.getCurrentTitle = function () {
-  return this.driver.getTitle()
-};
-
 /**
  * Waits for element by specified locator
  * @param {object} locator
- * @param {number} timeout
+ * @param {number=} timeout
  * @returns {webdriver.promise.Promise<T>}
  */
 Page.prototype.waitForElement = function (locator, timeout) {
-  var waitTimeout = timeout || 10000;
+  var waitTimeout = timeout || 15000;
   var driver = this.driver;
   return driver.wait(function() {
     driver.isElementPresent(locator);
   }, waitTimeout);
 };
-
-Page.prototype.waitForPageToLoad = function () {
-  return this.driver.exe
-}
 
 /**
  * Find element by its locator
@@ -55,7 +46,7 @@ Page.prototype.waitForPageToLoad = function () {
  */
 Page.prototype.element = function (locator) {
   var element = this.driver.findElement(locator);
-  if (element) {
+  if (element.isDisplayed() && element.isEnabled()) {
     return element;
   }
   else {
