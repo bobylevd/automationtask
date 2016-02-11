@@ -1,31 +1,64 @@
 var Page = require('./basePage');
-var until = require('selenium-webdriver').until;
 
+/**
+ * Create subclass of Page
+ * @param {instance} webdriver
+ * @constructor
+ */
 function LeadsPage (webdriver) {
   Page.call(this, webdriver, 'https://app.futuresimple.com/leads');
 }
 
+/**
+ * LeadsPage extends Page class.
+ * @type {Page}
+ */
 LeadsPage.prototype = Object.create(Page.prototype);
 LeadsPage.prototype.constructor = LeadsPage;
 
+/**
+ * Uses inherited {@link Page.clickElement}
+ * to schedule a click command on an element.
+ * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise.<void>}
+ */
 LeadsPage.prototype.createNewLead = function () {
   return this.clickElement({ id : 'leads-new' });
 };
 
+/**
+ * Uses inherited {@link Page.element}
+ * to find element on page.
+ * @returns {!webdriver.WebElement|WebElementPromise}
+ */
 LeadsPage.prototype.getLeadStatus = function () {
   return this.element({ xpath : '//span[@class="lead-status"]' });
 };
 
+/**
+ * Uses inherited {@link Page.clickElement}
+ * to schedule a click command on an element.
+ * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise.<void>}
+ */
 LeadsPage.prototype.openLastLead = function () {
   return this.clickElement({ xpath : '(//a[@class="lead-name"])[1]' });
 };
 
-
+/**
+ * Uses inherited {@link Page.clickElement}
+ * to schedule a click command on an element.
+ * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise.<void>}
+ */
 LeadsPage.prototype.openSettings = function () {
   this.clickElement({ xpath : '//a[@href="#user-dd"]' });
   return this.clickElement({ xpath : '//a[@href="/settings/profile"]' });
 };
 
+/**
+ * Uses inherited {@link Page.clickElement} and {@link Page.sendKeysToElement}
+ * to schedule a click commands on an elements.
+ * @param {Object=} info optional object to use for Lead creation.
+ * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise.<void>}
+ */
 LeadsPage.prototype.fillForm = function (info) {
   var formInfo = info || {
       firstname : 'dmitry',

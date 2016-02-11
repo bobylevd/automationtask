@@ -30,7 +30,7 @@ test.describe('BaseCRM Test', function () {
   test.it('Login and inputs username and password', function () {
     loginP = new LoginPage(driver);
     loginP.open();
-    loginP.login('secretlogin', 'secretpassword');
+    loginP.login('secret', 'secret');
     appP = new AppPage(driver);
     appP.clickLeads();
   });

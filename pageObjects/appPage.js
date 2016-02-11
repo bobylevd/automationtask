@@ -1,28 +1,29 @@
 var Page = require('./basePage');
-var LeadsPage = require('./leadsPage');
 
+/**
+ * Create subclass of Page
+ * @param {instance} webdriver
+ * @constructor
+ */
 function AppPage (webdriver) {
-  Page.call(this, webdriver);
+  Page.call(this, webdriver); //call Page constructor
 }
 
+/**
+ * AppPage extends Page class.
+ * @type {Page}
+ */
 AppPage.prototype = Object.create(Page.prototype);
 AppPage.prototype.constructor = AppPage;
 
-//AppPage.prototype.checkUrl = function () {
-//  return this.driver.getCurrentUrl().then(function (url) {
-//    console.log(url);
-//  });
-//};
-
-
+/**
+ * Uses inherited {@link Page.clickElement}
+ * to schedule a click command on an element.
+ * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise.<void>}
+ */
 AppPage.prototype.clickLeads = function () {
   return this.clickElement({ id : 'nav-leads' });
-  //return this;
 };
-
-//AppPage.prototype.openNext = function () {
-//  return new LeadsPage(this.driver);
-//};
 
 module.exports = AppPage;
 

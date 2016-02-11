@@ -1,14 +1,9 @@
 "use strict";
 
-var fs = require('fs');
-var assert = require('chai').assert;
-var until = require('selenium-webdriver').until;
-var NoSuchElementError = require('selenium-webdriver').error;
-
 /**
- *
- * @param driver
- * @param url
+ * Superclass
+ * @param {instance} driver
+ * @param {string} url
  * @constructor
  */
 function Page(driver, url) {
@@ -17,8 +12,8 @@ function Page(driver, url) {
 }
 
 /**
- *
- * @returns {Page}
+ * Opens page.
+ * @returns {Page} instance
  */
 Page.prototype.open = function() {
   this.driver.get(this.url);
@@ -27,8 +22,8 @@ Page.prototype.open = function() {
 
 /**
  * Waits for element by specified locator
- * @param {object} locator
- * @param {number=} timeout
+ * @param {Object} locator
+ * @param {number=} timeout optional
  * @returns {webdriver.promise.Promise<T>}
  */
 Page.prototype.waitFor = function(locator, timeout) {
@@ -40,9 +35,10 @@ Page.prototype.waitFor = function(locator, timeout) {
 };
 
 /**
- *
- * @param locator
+ * Waits for element by specified locator, then pass it on.
+ * @param {Object} locator
  * @returns {!webdriver.WebElement|WebElementPromise}
+ * - promise that will be fulfilled when WebElement is found
  */
 Page.prototype.element = function (locator) {
   this.waitFor(locator);
@@ -50,18 +46,19 @@ Page.prototype.element = function (locator) {
 };
 
 /**
- * Schedules a click on element by specified locator.
- * @param {object} locator
- * @returns {webdriver.promise.Promise<void>|!webdriver.promise.Promise.<void>}
- * a promise that will be resolved when the command has completed.
+ * Schedules a click command on element specified by locator
+ * @param {Object} locator
+ * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise<void>}
+ * A promise that will be resolved when
+ * this command has completed.
  */
 Page.prototype.clickElement = function(locator) {
   return this.element(locator).click();
 };
 
 /**
- * Schedules a command on element specified by locator
- * @param {object} locator
+ * Schedules a sendKeys command on element specified by locator
+ * @param {Object} locator
  * @param {string} input
  * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise<void>}
  * a promise that will be resolved when the command has completed.
@@ -70,29 +67,6 @@ Page.prototype.sendKeysToElement = function(locator, input) {
   var element = this.element(locator);
   element.clear();
   return element.sendKeys(input);
-};
-
-/**
- *
- * @returns {Promise<R>}
- */
-Page.prototype.getProgressBarAttr = function () {
-  var progressbar = this.element({ id : 'feedback-progress' });
-  this.driver.wait(until.elementIsVisible(progressbar), 2000);
-  return progressbar.getAttribute('class').then(function (attr) {
-    if (attr === 'hide') {
-      return true;
-    }
-    return false;
-  });
-};
-
-/**
- *
- * @returns {Promise<T>|webdriver.promise.Promise<T>|!webdriver.promise.Promise.<T>|!promise.Promise.<T>}
- */
-Page.prototype.waitForProgressBar = function () {
-  return this.driver.wait(this.getProgressBarAttr(), 3000);
 };
 
 module.exports = Page;
