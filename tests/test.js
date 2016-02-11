@@ -10,12 +10,11 @@ var assert = require('chai').assert;
 test.describe('BaseCRM Test', function () {
 
   var loginP;
-  var appP;
-  var leadsP;
-  var settingsP;
-  var driver;
+  var appPage;
+  var leadsPage;
+  var settingsPage;
 
-  this.timeout(20000);
+  var driver;
 
   test.before(function () {
     driver = require('./driver').getDriver();
@@ -27,46 +26,51 @@ test.describe('BaseCRM Test', function () {
     }
   });
 
-  test.it('Login and inputs username and password', function () {
+  test.it('Open login page and input username and password', function () {
     loginP = new LoginPage(driver);
     loginP.open();
-    loginP.login('secret', 'secret');
-    appP = new AppPage(driver);
-    appP.clickLeads();
+    loginP.login('dimster-od@yandex.ru', '236754');
+    appPage = new AppPage(driver);
+    appPage.clickLeads();
   });
 
-  test.it('Create new lead and check its status.', function () {
-    leadsP = new LeadsPage(driver);
-    leadsP.createNewLead();
-    leadsP.fillForm();
-    leadsP.getLeadStatus()
-      .then(function (text) {
-      assert(text, 'new-new-lead');
-    });
-  });
+  //test.it('Create new lead and check its status', function () {
+  //  leadsPage = new LeadsPage(driver);
+  //  leadsPage.createNewLead();
+  //  leadsPage.fillForm();
+  //  leadsPage.getLeadStatus()
+  //    .then(function (text) {
+  //    assert(text, 'new-new-lead');
+  //    });
+  //});
 
-  test.it('Open last lead and check its status', function () {
-    leadsP = new LeadsPage(driver);
-    leadsP.open();
-    leadsP.openLastLead();
-    leadsP.getLeadStatus()
+  test.it('Open first lead on page and check its status', function () {
+    leadsPage = new LeadsPage(driver);
+    leadsPage.open();
+    leadsPage.openLastLead();
+    leadsPage.getLeadStatus()
       .then(function (text) {
         assert(text, 'new-new-lead');
       })
   });
 
-  test.it('Change default lead status in settings', function () {
-    leadsP.openSettings();
-    settingsP = new SettingsPage(driver);
-    settingsP.openLeadsSettings();
-    settingsP.openLeadStatuses();
-    settingsP.editLeadStatus();
-    settingsP.editLeadStatusName('new-new-lead');
-    settingsP.saveLeadStatusName();
-    leadsP.open();
-    leadsP.openLastLead();
-    leadsP.getLeadStatus().then(function (text) {
-      assert(text, 'new-new-lead')
-    });
+  test.it('Changes lead status name in settings', function () {
+    leadsPage.openSettings();
+    settingsPage = new SettingsPage(driver);
+    settingsPage.openLeadsSettings();
+    settingsPage.openLeadStatuses();
+    settingsPage.editLeadStatus();
+    settingsPage.editLeadStatusName('new-new-lead');
+    settingsPage.saveLeadStatusName();
+  });
+
+  test.it('Check that new lead status is in place', function () {
+    leadsPage = new LeadsPage(driver);
+    leadsPage.open();
+    leadsPage.openLastLead();
+    leadsPage.getLeadStatus()
+      .then(function (text) {
+        assert(text, 'new-new-lead');
+      });
   });
 });

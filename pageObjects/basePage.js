@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Superclass
  * @param {instance} driver

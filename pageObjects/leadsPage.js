@@ -41,6 +41,11 @@ LeadsPage.prototype.getLeadStatus = function () {
  */
 LeadsPage.prototype.openLastLead = function () {
   return this.clickElement({ xpath : '(//a[@class="lead-name"])[1]' });
+  /*
+   * ecountered a problem here. If there are >50 leads chromedriver won't click
+   * on an element, and raise an error
+   * Element is not clickable at point (148, 194). Other element would receive the click
+   */
 };
 
 /**

@@ -6,7 +6,7 @@ var Page = require('./basePage');
  * @constructor
  */
 function AppPage (webdriver) {
-  Page.call(this, webdriver); //call Page constructor
+  Page.call(this, webdriver, 'https://app.futuresimple.com/sales'); //call Page constructor
 }
 
 /**
