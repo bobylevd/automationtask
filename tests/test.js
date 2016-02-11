@@ -16,6 +16,8 @@ test.describe('BaseCRM Test', function () {
 
   var driver;
 
+  this.timeout(25000); // general test timeout.
+
   test.before(function () {
     driver = require('./driver').getDriver();
   });
