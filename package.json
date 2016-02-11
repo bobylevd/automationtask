@@ -4,11 +4,11 @@
   "description": "Simple test using mocha and selenium-webdriverjs to test BaseCRM",
   "main": "test.js",
   "scripts": {
-    "test": "mocha test"
+    "test": "node_modules/mocha/bin/_mocha ./tests/test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git"
+    "url": "git@github.com:bobylevd/automationtask.git"
   },
   "author": "Dmitry Bobylev",
   "license": "MIT",
