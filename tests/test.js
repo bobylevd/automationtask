@@ -9,7 +9,7 @@ var assert = require('chai').assert;
 
 test.describe('BaseCRM Test', function () {
 
-  var loginP;
+  var loginPage;
   var appPage;
   var leadsPage;
   var settingsPage;
@@ -27,22 +27,22 @@ test.describe('BaseCRM Test', function () {
   });
 
   test.it('Open login page and input username and password', function () {
-    loginP = new LoginPage(driver);
-    loginP.open();
-    loginP.login('dimster-od@yandex.ru', '236754');
+    loginPage = new LoginPage(driver);
+    loginPage.open();
+    loginPage.login('dimster-od@yandex.ru', '236754');
     appPage = new AppPage(driver);
     appPage.clickLeads();
   });
 
-  //test.it('Create new lead and check its status', function () {
-  //  leadsPage = new LeadsPage(driver);
-  //  leadsPage.createNewLead();
-  //  leadsPage.fillForm();
-  //  leadsPage.getLeadStatus()
-  //    .then(function (text) {
-  //    assert(text, 'new-new-lead');
-  //    });
-  //});
+  test.it('Create new lead and check its status', function () {
+    leadsPage = new LeadsPage(driver);
+    leadsPage.createNewLead();
+    leadsPage.fillForm();
+    leadsPage.getLeadStatus()
+      .then(function (text) {
+      assert(text, 'New');
+      });
+  });
 
   test.it('Open first lead on page and check its status', function () {
     leadsPage = new LeadsPage(driver);
@@ -50,7 +50,7 @@ test.describe('BaseCRM Test', function () {
     leadsPage.openLastLead();
     leadsPage.getLeadStatus()
       .then(function (text) {
-        assert(text, 'new-new-lead');
+        assert(text, 'New');
       })
   });
 
@@ -60,7 +60,7 @@ test.describe('BaseCRM Test', function () {
     settingsPage.openLeadsSettings();
     settingsPage.openLeadStatuses();
     settingsPage.editLeadStatus();
-    settingsPage.editLeadStatusName('new-new-lead');
+    settingsPage.editLeadStatusName('New-lead-test');
     settingsPage.saveLeadStatusName();
   });
 
@@ -70,7 +70,7 @@ test.describe('BaseCRM Test', function () {
     leadsPage.openLastLead();
     leadsPage.getLeadStatus()
       .then(function (text) {
-        assert(text, 'new-new-lead');
+        assert(text, 'New-lead-test');
       });
   });
 });
