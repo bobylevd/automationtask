@@ -14,7 +14,6 @@
   "license": "MIT",
   "devDependencies": {
     "chai": "^3.5.0",
-    "chromedriver": "^2.21.2",
     "fs": "0.0.2",
     "mocha": "^2.4.5",
     "selenium-webdriver": "2.45.0"

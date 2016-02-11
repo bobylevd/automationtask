@@ -59,7 +59,8 @@ SettingsPage.prototype.editLeadStatusName = function (text) {
  * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise.<void>}
  */
 SettingsPage.prototype.saveLeadStatusName = function () {
-  return this.clickElement({ xpath : '(//button[text()="Save"])[4]' });
+  this.clickElement({ xpath : '(//button[text()="Save"])[4]' });
+  return this.waitFor({ xpath : '//p[text()="Lead Status saved!"]'});
 };
 
 module.exports = SettingsPage;

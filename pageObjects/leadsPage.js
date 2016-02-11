@@ -31,7 +31,7 @@ LeadsPage.prototype.createNewLead = function () {
  * @returns {!webdriver.WebElement|WebElementPromise}
  */
 LeadsPage.prototype.getLeadStatus = function () {
-  return this.element({ xpath : '//span[@class="lead-status"]' });
+  return this.element({ xpath : '//span[@class="lead-status"]' }).getText();
 };
 
 /**
@@ -61,22 +61,9 @@ LeadsPage.prototype.openSettings = function () {
 /**
  * Uses inherited {@link Page.clickElement} and {@link Page.sendKeysToElement}
  * to schedule a click commands on an elements.
- * @param {Object=} info optional object to use for Lead creation.
  * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise.<void>}
  */
-LeadsPage.prototype.fillForm = function (info) {
-  var formInfo = info || {
-      firstname : 'dmitry',
-      lastname : 'test',
-      companyname : 'testcomp',
-      title : 'mr',
-      email : 'itsme@gmail.com',
-      phone : '6505525252',
-      adress : 'test street 123',
-      city : 'Odessa',
-      zip : '65000',
-      state : 'Odessa'
-    };
+LeadsPage.prototype.fillForm = function () {
   this.sendKeysToElement({ id : 'lead-first-name' }, formInfo.firstname);
   this.sendKeysToElement({ id : 'lead-last-name' }, formInfo.lastname);
   this.sendKeysToElement({ id : 'lead-company-name' }, formInfo.companyname);
@@ -87,9 +74,22 @@ LeadsPage.prototype.fillForm = function (info) {
   this.sendKeysToElement({ id : 'lead-city' }, formInfo.city);
   this.sendKeysToElement({ id : 'lead-zip' }, formInfo.zip);
   this.sendKeysToElement({ id : 'lead-region' }, formInfo.state);
-  this.clickElement({ xpath : '//span[text()="Select an Option"]' });
+  this.clickElement({ xpath : '//span[text()="Select an Option"]' }); //hack to open country dropdown.
   this.clickElement({ xpath : '//li[text()="Ukraine"]'} );
   return this.clickElement({ xpath : '//button[contains(@class, "save")]' });
+};
+
+var formInfo = {
+    firstname : 'dmitry',
+    lastname : 'test',
+    companyname : 'testcomp',
+    title : 'mr',
+    email : 'itsme@gmail.com',
+    phone : '6505525252',
+    adress : 'test street 123',
+    city : 'Odessa',
+    zip : '65000',
+    state : 'Odessa'
 };
 
 module.exports = LeadsPage;

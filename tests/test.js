@@ -31,7 +31,7 @@ test.describe('BaseCRM Test', function () {
   test.it('Open login page and input username and password', function () {
     loginPage = new LoginPage(driver);
     loginPage.open();
-    loginPage.login('dimster-od@yandex.ru', '236754');
+    loginPage.login('secretlogin', 'secretpassword');
     appPage = new AppPage(driver);
     appPage.clickLeads();
   });
@@ -42,7 +42,7 @@ test.describe('BaseCRM Test', function () {
     leadsPage.fillForm();
     leadsPage.getLeadStatus()
       .then(function (text) {
-      assert(text, 'New');
+        assert.equal(text, 'New');
       });
   });
 
@@ -52,7 +52,7 @@ test.describe('BaseCRM Test', function () {
     leadsPage.openLastLead();
     leadsPage.getLeadStatus()
       .then(function (text) {
-        assert(text, 'New');
+        assert.equal(text, 'New');
       })
   });
 
@@ -62,7 +62,7 @@ test.describe('BaseCRM Test', function () {
     settingsPage.openLeadsSettings();
     settingsPage.openLeadStatuses();
     settingsPage.editLeadStatus();
-    settingsPage.editLeadStatusName('New-lead-test');
+    settingsPage.editLeadStatusName('New-lead-text');
     settingsPage.saveLeadStatusName();
   });
 
@@ -72,7 +72,7 @@ test.describe('BaseCRM Test', function () {
     leadsPage.openLastLead();
     leadsPage.getLeadStatus()
       .then(function (text) {
-        assert(text, 'New-lead-test');
+        assert.equal(text, 'New-lead-text');
       });
   });
 });
