@@ -2,11 +2,13 @@
 
 var fs = require('fs');
 var assert = require('chai').assert;
+var until = require('selenium-webdriver').until;
+var NoSuchElementError = require('selenium-webdriver').error;
 
 /**
- * Main test class that takes webdriver instance as argument
- * @param {instance} driver
- * @param {string} url
+ *
+ * @param driver
+ * @param url
  * @constructor
  */
 function Page(driver, url) {
@@ -15,7 +17,7 @@ function Page(driver, url) {
 }
 
 /**
- * Opens page on test setUp
+ *
  * @returns {Page}
  */
 Page.prototype.open = function() {
@@ -29,30 +31,22 @@ Page.prototype.open = function() {
  * @param {number=} timeout
  * @returns {webdriver.promise.Promise<T>}
  */
-Page.prototype.waitForElement = function (locator, timeout) {
+Page.prototype.waitFor = function(locator, timeout) {
   var waitTimeout = timeout || 15000;
   var driver = this.driver;
   return driver.wait(function() {
-    driver.isElementPresent(locator);
-  }, waitTimeout);
+    return driver.isElementPresent(locator);
+  }, waitTimeout, 'Wait timeout for locator: ' + JSON.stringify(locator));
 };
 
 /**
- * Find element by its locator
- * and checks that this element is enabled and displayed
- * @param {object} locator
- * @returns {!webdriver.WebElement|WebElementPromise} that will be resolved
- * when element is found and verified.
+ *
+ * @param locator
+ * @returns {!webdriver.WebElement|WebElementPromise}
  */
 Page.prototype.element = function (locator) {
-  var element = this.driver.findElement(locator);
-  if (element.isDisplayed() && element.isEnabled()) {
-    return element;
-  }
-  else {
-    throw new Error ('Element is not displayed/enabled,\n ' +
-      'supposed to be found by: ', locator)
-  }
+  this.waitFor(locator);
+  return this.driver.findElement(locator);
 };
 
 /**
@@ -73,7 +67,32 @@ Page.prototype.clickElement = function(locator) {
  * a promise that will be resolved when the command has completed.
  */
 Page.prototype.sendKeysToElement = function(locator, input) {
-  return this.element(locator).sendKeys(input);
+  var element = this.element(locator);
+  element.clear();
+  return element.sendKeys(input);
+};
+
+/**
+ *
+ * @returns {Promise<R>}
+ */
+Page.prototype.getProgressBarAttr = function () {
+  var progressbar = this.element({ id : 'feedback-progress' });
+  this.driver.wait(until.elementIsVisible(progressbar), 2000);
+  return progressbar.getAttribute('class').then(function (attr) {
+    if (attr === 'hide') {
+      return true;
+    }
+    return false;
+  });
+};
+
+/**
+ *
+ * @returns {Promise<T>|webdriver.promise.Promise<T>|!webdriver.promise.Promise.<T>|!promise.Promise.<T>}
+ */
+Page.prototype.waitForProgressBar = function () {
+  return this.driver.wait(this.getProgressBarAttr(), 3000);
 };
 
 module.exports = Page;
