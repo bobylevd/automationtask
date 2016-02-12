@@ -17,12 +17,12 @@ AppPage.prototype = Object.create(Page.prototype);
 AppPage.prototype.constructor = AppPage;
 
 /**
- * Uses inherited {@link Page.clickElement}
+ * Uses inherited {@link Page.findElementAndClick}
  * to schedule a click command on an element.
  * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise.<void>}
  */
 AppPage.prototype.clickLeads = function () {
-  return this.clickElement({ id : 'nav-leads' });
+  return this.findElementAndClick({ id : 'nav-leads' });
 };
 
 module.exports = AppPage;

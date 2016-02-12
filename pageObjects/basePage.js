@@ -50,7 +50,7 @@ Page.prototype.element = function (locator) {
  * A promise that will be resolved when
  * this command has completed.
  */
-Page.prototype.clickElement = function(locator) {
+Page.prototype.findElementAndClick = function(locator) {
   return this.element(locator).click();
 };
 
@@ -61,10 +61,10 @@ Page.prototype.clickElement = function(locator) {
  * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise<void>}
  * a promise that will be resolved when the command has completed.
  */
-Page.prototype.sendKeysToElement = function(locator, input) {
+Page.prototype.setElementText = function(locator, input) {
   var element = this.element(locator);
-  element.clear();
-  return element.sendKeys(input);
+  return element.clear().then(element.sendKeys(input));
+  //return element.sendKeys(input);
 };
 
 module.exports = Page;

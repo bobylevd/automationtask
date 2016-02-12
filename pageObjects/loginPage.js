@@ -17,38 +17,38 @@ LoginPage.prototype = Object.create(Page.prototype);
 LoginPage.prototype.constructor = LoginPage;
 
 /**
- * Uses inherited {@link Page.sendKeysToElement}
+ * Uses inherited {@link Page.setElementText}
  * to schedule a send keys command to an element.
  * Can be called separately.
  * @param {string} username
  * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise.<void>}
  */
 LoginPage.prototype.inputUserName = function (username) {
-  return this.sendKeysToElement({ id : 'user_email' }, username);
+  return this.setElementText({ id : 'user_email' }, username);
 };
 
 /**
- * Uses inherited {@link Page.sendKeysToElement}
+ * Uses inherited {@link Page.setElementText}
  * to schedule a send keys command to an element.
  * Can be called separately.
  * @param {string} password
  * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise.<void>}
  */
 LoginPage.prototype.inputPassword = function (password) {
-  return this.sendKeysToElement({ id : 'user_password' }, password);
+  return this.setElementText({ id : 'user_password' }, password);
 };
 
 /**
- * Uses inherited {@link Page.clickElement}
+ * Uses inherited {@link Page.findElementAndClick}
  * to schedule a click command on an element.
  * @returns {!webdriver.promise.Promise.<void>|webdriver.promise.Promise.<void>}
  */
 LoginPage.prototype.clickSubmit = function () {
-  return this.clickElement({ xpath : '//div[@class="controls"]/button' });
+  return this.findElementAndClick({ xpath : '//div[@class="controls"]/button' });
 };
 
 /**
- * Uses inherited {@link Page.sendKeysToElement} and {@link Page.clickElement}
+ * Uses inherited {@link Page.setElementText} and {@link Page.findElementAndClick}
  * to schedule a send keys and click commands to an element.
  * @param {string} username
  * @param {string} password
